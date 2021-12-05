@@ -4,7 +4,7 @@ export class PageComponent {
   constructor() {
     this.element = document.createElement("ul");
     this.element.setAttribute("class", "page");
-    this.element.textContent = "This is PageComponents";
+    this.element.textContent = "This is PageComponents2";
   }
 
   attachTo(parent: HTMLElement, position: InsertPosition = "afterbegin") {
