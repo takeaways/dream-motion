@@ -33,6 +33,18 @@ label {
   padding:0;
 }
 
+button{
+  background: transparent;
+  border:0;
+  outline: 0;
+}
+
+input,textarea{
+  background-color:var(--text-edit-bg-color);
+  color:var(--smokywhite);
+  font-size:1.5em;
+}
+
 body {
   background: url('../assets/background.png') center/cover no-repeat;
   font-family: Roboto, Oxygen, sans-serif;
@@ -57,35 +69,20 @@ body {
 }
 
 .page-item{
-  padding:10px;
-  border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.8);
-  margin:5px 0;
-  
-  position: relative;
-  color:white;
+  margin:1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 2px 2px 6px var(--shadow-color);
+  background:var(--component-bg-gradient);
 }
 
-.page-item .page-item__controls{
-  display: inline-block;
-  position: absolute;
-  top:10px;
-  right:10px;
+.page-item__controls{
+  padding-right: .5em;
 }
 
-.page-item .page-item__controls .close{
-  font-size: 23px;
-  width: 32px;
-  height: 32px;
-  border-radius: 5px;
-  outline: none;
-  cursor: pointer;
-}
-
-.page-item .page-item__controls .close:active{
-  background-color: var(--accent-color);
-  color:var(--smokywhite);
-
+.page-item__title{
+  color:var(--text-accent-color);
 }
 
 .banner {
@@ -106,7 +103,8 @@ body {
   margin-bottom: 5px;
 }
 
-.create-button {
+.create-button,
+.dialog__submit {
   margin: 0.1em 0.2em;
   text-align: center;
   user-select: none;
@@ -119,6 +117,16 @@ body {
   border-color: var(--accent-color);
   border-radius: 2px;
   cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.create-button:hover,
+.create-button:focus{
+  
+  color:var(--shadow-color);
+  text-decoration: none;
+  cursor: pointer;
+  transform: scale(1.04) translateY(-5px);
 }
 
 .document {
@@ -176,4 +184,33 @@ dialog{
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
   box-shadow: 2px 2px 20px var(--shadow-color);
+}
+
+.form__container{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.close{
+  align-self: flex-end;
+  padding:0.2rem;
+  color:var(--accent-color);
+  font-size: 28px;
+  font-weight: bold;
+  margin:3px;
+  transition: color 0.25s ease;
+}
+
+.close:hover,
+.close:focus{
+  transform: scale(1.5);
+  color:var(--shadow-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dialog__submit{
+  align-self: flex-end;
+  padding:0.5em 1.5em;
 }
