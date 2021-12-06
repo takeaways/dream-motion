@@ -1,6 +1,7 @@
 export interface Component {
   attachTo(parent: HTMLElement, position?: InsertPosition): void;
   removeFrom(parent: HTMLElement): void;
+  removeMe(e: MouseEvent): void;
 }
 
 export class BaseComponent<T extends HTMLElement> implements Component {
@@ -21,5 +22,11 @@ export class BaseComponent<T extends HTMLElement> implements Component {
       throw new Error("Parent mistmatch!");
     }
     parent.removeChild(this.element);
+  }
+
+  removeMe(e: MouseEvent) {
+    if (e.target === this.element) {
+      document.body.removeChild(this.element);
+    }
   }
 }

@@ -6,9 +6,45 @@ export interface Composable {
 
 type OnCloseListener = () => void;
 
+interface SectionContainer extends Component, Composable {
+  setOnCloseListener(listener: OnCloseListener): void;
+}
+
+type SectionContainerConstructor = {
+  new (): SectionContainer;
+};
+
+export class DarkPageItemComponent
+  extends BaseComponent<HTMLElement>
+  implements SectionContainer
+{
+  private closeListener?: OnCloseListener;
+  constructor() {
+    super(`
+    <li class="page-item" style="background-color:black; margin-bottom:5px;">
+      <section class="page-item__body"></section>
+      <div class="page-item__controls">
+        <button class="close">&times;</button>
+      </div>
+    </li>
+    `);
+
+    const closeBtn = this.element.querySelector(".close")! as HTMLButtonElement;
+    closeBtn.onclick = () => {
+      this.closeListener && this.closeListener();
+    };
+  }
+  setOnCloseListener(listener: OnCloseListener): void {
+    this.closeListener = listener;
+  }
+  addChild(child: Component): void {
+    child.attachTo(this.element);
+  }
+}
+
 export class PageItemComponent
   extends BaseComponent<HTMLElement>
-  implements Composable
+  implements SectionContainer
 {
   private closeListener?: OnCloseListener;
 
@@ -44,14 +80,14 @@ export class PageComponent
   extends BaseComponent<HTMLUListElement>
   implements Composable
 {
-  constructor() {
+  constructor(private pageItemConstructor: SectionContainerConstructor) {
     super(`
     <ul class="page"></ul>
     `);
   }
 
   addChild(section: Component) {
-    const item = new PageItemComponent();
+    const item = new this.pageItemConstructor();
     item.addChild(section);
     item.attachTo(this.element, "beforeend");
     item.setOnCloseListener(() => {
